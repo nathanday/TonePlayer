@@ -17,9 +17,6 @@ class TonePlayer {
 	let				maximumPolyphony: Int;
 	let				sampleRate: Float64;
 
-	var				envelope: Envelope = ADSREnvelope(attack: 0.05, decay: 0.2, sustain: 0.5, release: 0.5);
-	var				oscillator: Oscillator = SineOscillator();
-
 	init( maximumPolyphony aMaximumPolyphony: Int, sampleRate aSampleRate: Float64 = 48000.0 ) {
 		maximumPolyphony = aMaximumPolyphony;
 		sampleRate = aSampleRate;
@@ -82,8 +79,8 @@ class TonePlayer {
 		assert( theError == noErr, "Error starting unit: \(theError)");
 	}
 
-	func play(frequency aFrequency: Double) -> TonePlayer.Voice {
-		let		theVoice = Voice(tonePlayer: self, frequency: aFrequency, oscillator: oscillator, envelope: envelope);
+	func play(instrument anInstrument:Instrument, frequency aFrequency: Double) -> TonePlayer.Voice {
+		let		theVoice = Voice(tonePlayer: self, frequency: aFrequency, instrument:anInstrument);
 		lock.lock()
 		if voicies.count+1 > maximumPolyphony {
 			voicies.remove(at: 0);
@@ -108,10 +105,14 @@ class TonePlayer {
 		lock.unlock();
 	}
 
+	struct Instrument {
+		let				envelope: Envelope;
+		let				oscillator: Oscillator;
+	}
+
 	class Voice: Hashable, Comparable {
 		weak var					tonePlayer: TonePlayer? = nil;
-		public let					envelope: Envelope;
-		public let					oscillator: Oscillator;
+		public let					instrument: Instrument;
 		public let					frequency: Double;
 		public private(set) var		amplitude: Float32;
 
@@ -120,20 +121,19 @@ class TonePlayer {
 		private var		envelopeIndex = 0;
 		private var		nextEnvelopeBreakTime: Int;
 
-		init( tonePlayer aTonePlayer: TonePlayer, frequency aFrequency: Double, oscillator anOscillator: Oscillator, envelope anEnvelope: Envelope ) {
+		init( tonePlayer aTonePlayer: TonePlayer, frequency aFrequency: Double, instrument anInstrument: Instrument ) {
 			tonePlayer = aTonePlayer;
 			frequency = aFrequency;
-			oscillator = anOscillator;
-			envelope = anEnvelope;
-			amplitude = envelope.initialValue;
-			amplitudeDelta = envelope[0].delta(from: amplitude, sampleRate: aTonePlayer.sampleRate);
-			nextEnvelopeBreakTime = Int(envelope[0].duration*aTonePlayer.sampleRate);
+			instrument = anInstrument;
+			amplitude = instrument.envelope.initialValue;
+			amplitudeDelta = instrument.envelope[0].delta(from: amplitude, sampleRate: aTonePlayer.sampleRate);
+			nextEnvelopeBreakTime = Int(instrument.envelope[0].duration*aTonePlayer.sampleRate);
 		}
 
 		func generate( add anAdd: Bool, buffer aBuffer : UnsafeMutableBufferPointer<Float32>, gain aGain: Float32, count aCount : Int ) {
 			let		theFreqDiv = frequency/tonePlayer!.sampleRate;
 			for i : Int in 0..<aCount {
-				let		theValue = oscillator[Float32(theta)]*amplitude*aGain;
+				let		theValue = instrument.oscillator[Float32(theta)]*amplitude*aGain;
 				if anAdd {
 					aBuffer[i] += theValue;
 				} else {
@@ -146,7 +146,7 @@ class TonePlayer {
 				}
 				if nextEnvelopeBreakTime > 0 {
 					nextEnvelopeBreakTime -= 1;
-				} else if envelope[envelopeIndex].hold {
+				} else if instrument.envelope[envelopeIndex].hold {
 					amplitudeDelta = 0.0;
 					nextEnvelopeBreakTime = Int.max;
 				} else {
@@ -157,16 +157,16 @@ class TonePlayer {
 
 		private func nextEvelopePoint() {
 			let		theSampleRate = tonePlayer!.sampleRate;
-			if envelopeIndex+1 < envelope.count  {
+			if envelopeIndex+1 < instrument.envelope.count  {
 				envelopeIndex += 1;
-				amplitudeDelta = envelope[envelopeIndex].delta(from: amplitude, sampleRate: theSampleRate);
-				nextEnvelopeBreakTime = Int(envelope[envelopeIndex].duration*theSampleRate);
+				amplitudeDelta = instrument.envelope[envelopeIndex].delta(from: amplitude, sampleRate: theSampleRate);
+				nextEnvelopeBreakTime = Int(instrument.envelope[envelopeIndex].duration*theSampleRate);
 			}
 		}
 
 		func stop() {
-			if envelopeIndex < envelope.count {
-				envelopeIndex = envelope.count;
+			if envelopeIndex < instrument.envelope.count {
+				envelopeIndex = instrument.envelope.count;
 				amplitudeDelta = -Float32(tonePlayer!.sampleRate*1.0/20.0);
 			}
 		}

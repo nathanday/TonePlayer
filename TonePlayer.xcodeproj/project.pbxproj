@@ -42,6 +42,7 @@
 		D8C06F0D2213F5F800066CEC /* SawtoothOscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SawtoothOscillator.swift; sourceTree = "<group>"; };
 		D8C06F0F2213F71800066CEC /* SquareOscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareOscillator.swift; sourceTree = "<group>"; };
 		D8C06F112213FE5800066CEC /* PulseOscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseOscillator.swift; sourceTree = "<group>"; };
+		D8C06F1322142E6000066CEC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D8E71A3E220828D700372CD8 /* TonePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8E71A41220828D700372CD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8E71A43220828D700372CD8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -89,6 +90,7 @@
 		D8E71A35220828D700372CD8 = {
 			isa = PBXGroup;
 			children = (
+				D8C06F1322142E6000066CEC /* README.md */,
 				D8E71A40220828D700372CD8 /* TonePlayer */,
 				D8E71A53220828D800372CD8 /* TonePlayerTests */,
 				D8E71A3F220828D700372CD8 /* Products */,
