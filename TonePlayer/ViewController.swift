@@ -34,6 +34,33 @@ class ViewController: NSViewController {
 		return ADSREnvelope( attack: envelopeAttack, decay: envelopeDecay, sustain: envelopeSustain, release: envelopeRelease )
 	}
 
+	@objc var		selectedOscillatorIndex: Int = 0 {
+		didSet { tonePlayer.oscillator = selectedOscillator; }
+	}
+
+	var		selectedOscillator: Oscillator {
+		switch selectedOscillatorIndex {
+		case 0:
+			return SineOscillator();
+		case 1:
+			return SawtoothOscillator();
+		case 2:
+			return SquareOscillator();
+		case 3:
+			return PulseOscillator(width:pulseWidth/100.0);
+		default:
+			return SineOscillator();
+		}
+	}
+
+	@objc var		pulseWidth: Float = 50.0 {
+		didSet {
+			if selectedOscillatorIndex == 3 {
+				tonePlayer.oscillator = selectedOscillator;
+			}
+		}
+	}
+
 	@IBOutlet weak var freqTextFieldContainerView: NSView!
 
 	override func viewDidLoad() {

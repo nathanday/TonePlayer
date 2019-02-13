@@ -1,5 +1,5 @@
 //
-//  Oscillator.swift
+//  SineOscillator.swift
 //  TonePlayer
 //
 //  Created by Nathaniel Day on 13/02/19.
@@ -8,6 +8,8 @@
 
 import Foundation
 
-protocol Oscillator {
-	subscript(anX: Float32) -> Float32 { get }
+struct SineOscillator : Oscillator {
+	subscript(x: Float32) -> Float32 {
+		return sin(2.0*Float32.pi*x);
+	}
 }

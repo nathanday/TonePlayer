@@ -1,5 +1,5 @@
 //
-//  Oscillator.swift
+//  SawtoothOscillator.swift
 //  TonePlayer
 //
 //  Created by Nathaniel Day on 13/02/19.
@@ -8,6 +8,8 @@
 
 import Foundation
 
-protocol Oscillator {
-	subscript(anX: Float32) -> Float32 { get }
+struct SawtoothOscillator: Oscillator {
+	subscript(x: Float32) -> Float32 {
+		return 1.0-2.0*x;
+	}
 }

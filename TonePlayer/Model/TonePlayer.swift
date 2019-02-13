@@ -18,6 +18,7 @@ class TonePlayer {
 	let				sampleRate: Float64;
 
 	var				envelope: Envelope = ADSREnvelope(attack: 0.05, decay: 0.2, sustain: 0.5, release: 0.5);
+	var				oscillator: Oscillator = SineOscillator();
 
 	init( maximumPolyphony aMaximumPolyphony: Int, sampleRate aSampleRate: Float64 = 48000.0 ) {
 		maximumPolyphony = aMaximumPolyphony;
@@ -82,7 +83,7 @@ class TonePlayer {
 	}
 
 	func play(frequency aFrequency: Double) -> TonePlayer.Voice {
-		let		theVoice = Voice(tonePlayer: self, frequency: aFrequency, envelope: envelope);
+		let		theVoice = Voice(tonePlayer: self, frequency: aFrequency, oscillator: oscillator, envelope: envelope);
 		lock.lock()
 		if voicies.count+1 > maximumPolyphony {
 			voicies.remove(at: 0);
@@ -110,6 +111,7 @@ class TonePlayer {
 	class Voice: Hashable, Comparable {
 		weak var					tonePlayer: TonePlayer? = nil;
 		public let					envelope: Envelope;
+		public let					oscillator: Oscillator;
 		public let					frequency: Double;
 		public private(set) var		amplitude: Float32;
 
@@ -118,9 +120,10 @@ class TonePlayer {
 		private var		envelopeIndex = 0;
 		private var		nextEnvelopeBreakTime: Int;
 
-		init( tonePlayer aTonePlayer: TonePlayer, frequency aFrequency: Double, envelope anEnvelope: Envelope ) {
+		init( tonePlayer aTonePlayer: TonePlayer, frequency aFrequency: Double, oscillator anOscillator: Oscillator, envelope anEnvelope: Envelope ) {
 			tonePlayer = aTonePlayer;
 			frequency = aFrequency;
+			oscillator = anOscillator;
 			envelope = anEnvelope;
 			amplitude = envelope.initialValue;
 			amplitudeDelta = envelope[0].delta(from: amplitude, sampleRate: aTonePlayer.sampleRate);
@@ -130,7 +133,7 @@ class TonePlayer {
 		func generate( add anAdd: Bool, buffer aBuffer : UnsafeMutableBufferPointer<Float32>, gain aGain: Float32, count aCount : Int ) {
 			let		theFreqDiv = frequency/tonePlayer!.sampleRate;
 			for i : Int in 0..<aCount {
-				let		theValue = sin(2.0*Float32.pi*Float32(theta))*amplitude*aGain;
+				let		theValue = oscillator[Float32(theta)]*amplitude*aGain;
 				if anAdd {
 					aBuffer[i] += theValue;
 				} else {
