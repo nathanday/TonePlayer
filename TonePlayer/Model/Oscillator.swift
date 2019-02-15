@@ -8,6 +8,10 @@
 
 import Foundation
 
-protocol Oscillator {
+protocol OscillatorData {
 	subscript(anX: Float32) -> Float32 { get }
+}
+
+protocol Oscillator {
+	mutating func data(length aLength: Int) -> OscillatorData;
 }

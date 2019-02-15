@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct SquareOscillator: Oscillator {
+struct SquareOscillator: Oscillator, OscillatorData {
+	func data(length aLength: Int) -> OscillatorData {
+		return self;
+	}
 	subscript(x: Float32) -> Float32 {
 		return x < 0.5 ? 1.0 : -1.0;
 	}

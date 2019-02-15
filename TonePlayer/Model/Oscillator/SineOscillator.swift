@@ -8,7 +8,10 @@
 
 import Foundation
 
-struct SineOscillator : Oscillator {
+struct SineOscillator : Oscillator, OscillatorData {
+	func data(length aLength: Int) -> OscillatorData {
+		return self;
+	}
 	subscript(x: Float32) -> Float32 {
 		return sin(2.0*Float32.pi*x);
 	}

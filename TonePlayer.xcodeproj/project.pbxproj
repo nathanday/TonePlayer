@@ -15,6 +15,7 @@
 		D8C06F0E2213F5F800066CEC /* SawtoothOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F0D2213F5F800066CEC /* SawtoothOscillator.swift */; };
 		D8C06F102213F71800066CEC /* SquareOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F0F2213F71800066CEC /* SquareOscillator.swift */; };
 		D8C06F122213FE5800066CEC /* PulseOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F112213FE5800066CEC /* PulseOscillator.swift */; };
+		D8C06F162216039A00066CEC /* HarmonicsDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E71A632208296F00372CD8 /* HarmonicsDescription.swift */; };
 		D8E71A42220828D700372CD8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E71A41220828D700372CD8 /* AppDelegate.swift */; };
 		D8E71A44220828D700372CD8 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E71A43220828D700372CD8 /* ViewController.swift */; };
 		D8E71A46220828D800372CD8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D8E71A45220828D800372CD8 /* Assets.xcassets */; };
@@ -43,6 +44,7 @@
 		D8C06F0F2213F71800066CEC /* SquareOscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareOscillator.swift; sourceTree = "<group>"; };
 		D8C06F112213FE5800066CEC /* PulseOscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PulseOscillator.swift; sourceTree = "<group>"; };
 		D8C06F1322142E6000066CEC /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		D8C06F14221546B700066CEC /* HarmonicSeriesOscillator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HarmonicSeriesOscillator.swift; sourceTree = "<group>"; };
 		D8E71A3E220828D700372CD8 /* TonePlayer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TonePlayer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8E71A41220828D700372CD8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D8E71A43220828D700372CD8 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				D8C06F0D2213F5F800066CEC /* SawtoothOscillator.swift */,
 				D8C06F0F2213F71800066CEC /* SquareOscillator.swift */,
 				D8C06F112213FE5800066CEC /* PulseOscillator.swift */,
+				D8C06F14221546B700066CEC /* HarmonicSeriesOscillator.swift */,
 			);
 			path = Oscillator;
 			sourceTree = "<group>";
@@ -252,6 +255,7 @@
 				D8C06F092213E98800066CEC /* Oscillator.swift in Sources */,
 				D8C06F122213FE5800066CEC /* PulseOscillator.swift in Sources */,
 				D83F2469220D0D7300356C0E /* TonePlayer.swift in Sources */,
+				D8C06F162216039A00066CEC /* HarmonicsDescription.swift in Sources */,
 				D8E71A42220828D700372CD8 /* AppDelegate.swift in Sources */,
 				D8C06F102213F71800066CEC /* SquareOscillator.swift in Sources */,
 			);

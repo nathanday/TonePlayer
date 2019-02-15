@@ -740,7 +740,7 @@
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="f64-eg-tKG">
                                         <rect key="frame" x="177" y="-2" width="19" height="27"/>
-                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="fOX-WF-ZcF"/>
+                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="0.01" maxValue="100" id="fOX-WF-ZcF"/>
                                         <connections>
                                             <binding destination="XfG-lQ-9wD" name="value" keyPath="self.envelopeAttack" id="gbb-qj-Ygd"/>
                                         </connections>
@@ -765,7 +765,7 @@
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="klT-Yc-I7e">
                                         <rect key="frame" x="291" y="-2" width="19" height="27"/>
-                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="zfC-P5-nHh"/>
+                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="0.01" maxValue="100" id="zfC-P5-nHh"/>
                                         <connections>
                                             <binding destination="XfG-lQ-9wD" name="value" keyPath="self.envelopeDecay" id="dxs-dT-R4E"/>
                                         </connections>
@@ -790,7 +790,7 @@
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Xq9-Zp-aKa">
                                         <rect key="frame" x="391" y="-2" width="19" height="27"/>
-                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="lmk-pz-FGg"/>
+                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="0.050000000000000003" maxValue="100" id="lmk-pz-FGg"/>
                                         <connections>
                                             <binding destination="XfG-lQ-9wD" name="value" keyPath="self.envelopeSustain" id="KMb-nB-ruF"/>
                                         </connections>
@@ -815,7 +815,7 @@
                                     </textField>
                                     <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="aY6-ii-vjy">
                                         <rect key="frame" x="516" y="-2" width="19" height="27"/>
-                                        <stepperCell key="cell" continuous="YES" alignment="left" maxValue="100" id="s5D-dF-25v"/>
+                                        <stepperCell key="cell" continuous="YES" alignment="left" increment="0.01" maxValue="100" id="s5D-dF-25v"/>
                                         <connections>
                                             <binding destination="XfG-lQ-9wD" name="value" keyPath="self.envelopeRelease" id="uRY-iW-oet"/>
                                         </connections>
@@ -1142,7 +1142,7 @@
                                 </textFieldCell>
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fgl-YO-3mN">
-                                <rect key="frame" x="94" y="73" width="130" height="25"/>
+                                <rect key="frame" x="94" y="73" width="137" height="25"/>
                                 <popUpButtonCell key="cell" type="push" title="Sine wave" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="q6q-XD-6h4" id="sF7-hK-iz3">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -1160,6 +1160,9 @@
                                             <menuItem title="Pulse wave" id="eYX-6f-ghG">
                                                 <modifierMask key="keyEquivalentModifierMask"/>
                                             </menuItem>
+                                            <menuItem title="Harmonic series" id="Rub-rn-wN7">
+                                                <modifierMask key="keyEquivalentModifierMask"/>
+                                            </menuItem>
                                         </items>
                                     </menu>
                                 </popUpButtonCell>
@@ -1168,7 +1171,7 @@
                                 </connections>
                             </popUpButton>
                             <tabView type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="QKW-Ld-WTx">
-                                <rect key="frame" x="221" y="68" width="411" height="35"/>
+                                <rect key="frame" x="228" y="68" width="404" height="35"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Sine wave" identifier="" id="m2I-2s-x7l">
@@ -1220,12 +1223,110 @@
                                                         <binding destination="XfG-lQ-9wD" name="value" keyPath="self.pulseWidth" id="xgC-Ug-Cwz"/>
                                                     </connections>
                                                 </textField>
+                                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="bm0-cK-n51">
+                                                    <rect key="frame" x="116" y="5" width="19" height="27"/>
+                                                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="100" doubleValue="2" id="gW3-Fn-ZTh"/>
+                                                    <connections>
+                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.pulseWidth" id="YDt-RV-o3H"/>
+                                                    </connections>
+                                                </stepper>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="ZUC-Zg-kpY" firstAttribute="top" secondItem="na9-LW-Lzm" secondAttribute="top" constant="8" id="IkM-B5-By8"/>
                                                 <constraint firstItem="au7-Jk-YN8" firstAttribute="firstBaseline" secondItem="ZUC-Zg-kpY" secondAttribute="firstBaseline" id="Nj6-8p-cMD"/>
+                                                <constraint firstItem="bm0-cK-n51" firstAttribute="leading" secondItem="au7-Jk-YN8" secondAttribute="trailing" constant="3" id="irQ-ce-ist"/>
                                                 <constraint firstItem="ZUC-Zg-kpY" firstAttribute="leading" secondItem="na9-LW-Lzm" secondAttribute="leading" constant="8" id="m9q-ze-2pE"/>
+                                                <constraint firstItem="bm0-cK-n51" firstAttribute="centerY" secondItem="au7-Jk-YN8" secondAttribute="centerY" id="n01-3O-6J4"/>
                                                 <constraint firstItem="au7-Jk-YN8" firstAttribute="leading" secondItem="ZUC-Zg-kpY" secondAttribute="trailing" constant="8" id="zAj-6b-VDR"/>
+                                            </constraints>
+                                        </view>
+                                    </tabViewItem>
+                                    <tabViewItem label="Harmonic series" identifier="" id="Fui-8N-vZR">
+                                        <view key="view" id="SA0-fi-rq0">
+                                            <rect key="frame" x="0.0" y="0.0" width="404" height="35"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <subviews>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ukf-mf-9Sa">
+                                                    <rect key="frame" x="6" y="10" width="73" height="17"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Harmonics:" id="w9X-BZ-6uq">
+                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dOz-ym-Zj1">
+                                                    <rect key="frame" x="171" y="10" width="38" height="17"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" title="Even:" id="TVT-v1-0Jm">
+                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="4oI-Lg-0Si">
+                                                    <rect key="frame" x="85" y="7" width="60" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="3E8-ML-Wol"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="sQ1-JL-ppk">
+                                                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="W7p-DU-dYX">
+                                                            <real key="minimum" value="2"/>
+                                                            <real key="maximum" value="100"/>
+                                                        </numberFormatter>
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.pulseWidth" id="zeV-P3-bWg"/>
+                                                    </connections>
+                                                </textField>
+                                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="OCz-Ba-pXA">
+                                                    <rect key="frame" x="145" y="5" width="19" height="27"/>
+                                                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="100" doubleValue="2" id="2Fb-Ih-yM0"/>
+                                                    <connections>
+                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.pulseWidth" id="MfX-y4-FKt"/>
+                                                    </connections>
+                                                </stepper>
+                                                <textField verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Sdo-8u-XfZ">
+                                                    <rect key="frame" x="215" y="7" width="60" height="22"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="UFN-uI-Lks"/>
+                                                    </constraints>
+                                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" drawsBackground="YES" id="5Ep-CH-Xbr">
+                                                        <numberFormatter key="formatter" formatterBehavior="default10_4" numberStyle="decimal" minimumIntegerDigits="1" maximumIntegerDigits="2000000000" maximumFractionDigits="3" id="2ZT-Ot-Yal">
+                                                            <real key="minimum" value="2"/>
+                                                            <real key="maximum" value="100"/>
+                                                        </numberFormatter>
+                                                        <font key="font" metaFont="system"/>
+                                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                    <connections>
+                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.pulseWidth" id="h2y-B7-zOU"/>
+                                                    </connections>
+                                                </textField>
+                                                <stepper horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="5up-w2-0pu">
+                                                    <rect key="frame" x="275" y="5" width="19" height="27"/>
+                                                    <stepperCell key="cell" continuous="YES" alignment="left" minValue="2" maxValue="100" doubleValue="2" id="wC1-4G-gnl"/>
+                                                    <connections>
+                                                        <binding destination="XfG-lQ-9wD" name="value" keyPath="self.pulseWidth" id="X7m-e7-ekA"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="ukf-mf-9Sa" firstAttribute="top" secondItem="SA0-fi-rq0" secondAttribute="top" constant="8" id="8th-9M-hLT"/>
+                                                <constraint firstItem="4oI-Lg-0Si" firstAttribute="leading" secondItem="ukf-mf-9Sa" secondAttribute="trailing" constant="8" id="8vE-lk-d7E"/>
+                                                <constraint firstItem="ukf-mf-9Sa" firstAttribute="leading" secondItem="SA0-fi-rq0" secondAttribute="leading" constant="8" id="EqH-iA-NzD"/>
+                                                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="5up-w2-0pu" secondAttribute="trailing" constant="20" id="PdA-23-vho"/>
+                                                <constraint firstItem="Sdo-8u-XfZ" firstAttribute="firstBaseline" secondItem="dOz-ym-Zj1" secondAttribute="firstBaseline" id="UNd-RP-d8L"/>
+                                                <constraint firstItem="dOz-ym-Zj1" firstAttribute="leading" secondItem="OCz-Ba-pXA" secondAttribute="trailing" constant="12" id="cdG-V2-Dxf"/>
+                                                <constraint firstItem="OCz-Ba-pXA" firstAttribute="centerY" secondItem="4oI-Lg-0Si" secondAttribute="centerY" id="eVk-6M-4II"/>
+                                                <constraint firstItem="dOz-ym-Zj1" firstAttribute="firstBaseline" secondItem="ukf-mf-9Sa" secondAttribute="firstBaseline" id="fmk-BI-2gU"/>
+                                                <constraint firstItem="Sdo-8u-XfZ" firstAttribute="leading" secondItem="dOz-ym-Zj1" secondAttribute="trailing" constant="8" id="h1p-N6-SHb"/>
+                                                <constraint firstItem="OCz-Ba-pXA" firstAttribute="leading" secondItem="4oI-Lg-0Si" secondAttribute="trailing" constant="3" id="jP6-4b-9px"/>
+                                                <constraint firstItem="4oI-Lg-0Si" firstAttribute="firstBaseline" secondItem="ukf-mf-9Sa" secondAttribute="firstBaseline" id="ui0-zC-ELB"/>
+                                                <constraint firstItem="5up-w2-0pu" firstAttribute="leading" secondItem="Sdo-8u-XfZ" secondAttribute="trailing" constant="3" id="vlm-c6-9C2"/>
+                                                <constraint firstItem="5up-w2-0pu" firstAttribute="centerY" secondItem="Sdo-8u-XfZ" secondAttribute="centerY" id="xxF-Hh-Bx5"/>
                                             </constraints>
                                         </view>
                                     </tabViewItem>

@@ -13,21 +13,21 @@ private func index( for aControl: NSControl ) -> Int { return aControl.tag&0xFF;
 
 class ViewController: NSViewController {
 
-	var				frequencies : [Double] = [220.0, 275.0, 330.0, 385.0, 440.0, 495.0, 550.0, 605.0];
+	var				frequencies : [Double] = [110.0, 165.0, 220.0, 275.0, 330.0, 385.0, 440.0, 495.0];
 	var				voices : [TonePlayer.Voice?] = [nil, nil, nil, nil, nil, nil, nil, nil];
 	var				tonePlayer = TonePlayer(maximumPolyphony: 8, sampleRate: 48000.0);
 
 	@objc var		envelopeAttack: Double = 0.01 {
-		didSet { tonePlayer.envelope = envelope; }
+		didSet { currentInstrument = nil; }
 	}
 	@objc var		envelopeDecay: Double = 0.125 {
-		didSet { tonePlayer.envelope = envelope; }
+		didSet { currentInstrument = nil; }
 	}
 	@objc var		envelopeSustain: Float = 0.25 {
-		didSet { tonePlayer.envelope = envelope; }
+		didSet { currentInstrument = nil; }
 	}
 	@objc var		envelopeRelease: Double = 0.5 {
-		didSet { tonePlayer.envelope = envelope; }
+		didSet { currentInstrument = nil; }
 	}
 
 	var				envelope: Envelope {
@@ -35,7 +35,7 @@ class ViewController: NSViewController {
 	}
 
 	@objc var		selectedOscillatorIndex: Int = 0 {
-		didSet { tonePlayer.oscillator = selectedOscillator; }
+		didSet { currentInstrument = nil; }
 	}
 
 	var		selectedOscillator: Oscillator {
@@ -53,10 +53,23 @@ class ViewController: NSViewController {
 		}
 	}
 
+	private var		_currentInstrument: TonePlayer.Instrument? = nil;
+	var		currentInstrument: TonePlayer.Instrument? {
+		set(aValue) {
+		_currentInstrument = aValue;
+		}
+		get {
+			if _currentInstrument == nil {
+				_currentInstrument = tonePlayer.instrument(oscillator: selectedOscillator, envelope: envelope);
+			}
+			return _currentInstrument;
+		}
+	}
+
 	@objc var		pulseWidth: Float = 50.0 {
 		didSet {
 			if selectedOscillatorIndex == 3 {
-				tonePlayer.oscillator = selectedOscillator;
+				currentInstrument = nil;
 			}
 		}
 	}
@@ -66,6 +79,7 @@ class ViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		fillFreqTextFields();
+		currentInstrument = tonePlayer.instrument(oscillator: selectedOscillator, envelope: envelope);
 	}
 
 	override var representedObject: Any? {
@@ -97,8 +111,8 @@ class ViewController: NSViewController {
 		if let theVoice = voices[theIndex] {
 			theVoice.trigger();
 			voices[theIndex] = nil;
-		} else {
-			voices[theIndex] = tonePlayer.play(frequency: frequencies[theIndex]);
+		} else if let theInstrument = currentInstrument {
+			voices[theIndex] = theInstrument.play(frequency: frequencies[theIndex]);
 		}
 	}
 }
