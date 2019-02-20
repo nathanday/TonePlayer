@@ -13,9 +13,9 @@ private func index( for aControl: NSControl ) -> Int { return aControl.tag&0xFF;
 
 class ViewController: NSViewController {
 
-	var				frequencies : [Double] = [110.0, 165.0, 220.0, 275.0, 330.0, 385.0, 440.0, 495.0];
-	var				voices : [TonePlayer.Voice?] = [nil, nil, nil, nil, nil, nil, nil, nil];
-	var				tonePlayer = TonePlayer(maximumPolyphony: 8, sampleRate: 48000.0);
+	var				frequencies : [Double] = [110.0, 165.0, 220.0, 275.0, 330.0, 385.0, 440.0, 495.0, 550.0, 605.0, 660.0, 715.0];
+	var				voices : [TonePlayer.Voice?] = Array<TonePlayer.Voice?>(repeating: nil, count: 12);
+	var				tonePlayer = TonePlayer(maximumPolyphony: 12, sampleRate: 48000.0);
 
 	@objc var		envelopeAttack: Double = 0.01 {
 		didSet { currentInstrument = nil; }
@@ -48,6 +48,8 @@ class ViewController: NSViewController {
 			return SquareOscillator();
 		case 3:
 			return PulseOscillator(width:pulseWidth/100.0);
+		case 4:
+			return HarmonicSeriesOscillator(harmonicsDescription: HarmonicsDescription(amount: harmonicsDescriptionAmount, evenAmount: harmonicsDescriptionEvenAmount))
 		default:
 			return SineOscillator();
 		}
@@ -66,9 +68,25 @@ class ViewController: NSViewController {
 		}
 	}
 
-	@objc var		pulseWidth: Float = 50.0 {
+	@objc var		pulseWidth: Float = 25.0 {
 		didSet {
 			if selectedOscillatorIndex == 3 {
+				currentInstrument = nil;
+			}
+		}
+	}
+
+	@objc var		harmonicsDescriptionAmount: Double = 0.5 {
+		didSet {
+			if selectedOscillatorIndex == 4 {
+				currentInstrument = nil;
+			}
+		}
+	}
+
+	@objc var		harmonicsDescriptionEvenAmount: Double = 1.0 {
+		didSet {
+			if selectedOscillatorIndex == 4 {
 				currentInstrument = nil;
 			}
 		}

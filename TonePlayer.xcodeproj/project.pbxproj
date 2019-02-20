@@ -10,6 +10,7 @@
 		D83F2467220BF87700356C0E /* Envelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F2460220AEA0400356C0E /* Envelope.swift */; };
 		D83F2468220BF87E00356C0E /* ADSREnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F245E220AE59400356C0E /* ADSREnvelope.swift */; };
 		D83F2469220D0D7300356C0E /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F245C220AE51D00356C0E /* TonePlayer.swift */; };
+		D846DF1F22195DA3008FFB8B /* HarmonicSeriesOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F14221546B700066CEC /* HarmonicSeriesOscillator.swift */; };
 		D8C06F092213E98800066CEC /* Oscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F082213E98800066CEC /* Oscillator.swift */; };
 		D8C06F0B2213EE8700066CEC /* SineOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F0A2213EE8700066CEC /* SineOscillator.swift */; };
 		D8C06F0E2213F5F800066CEC /* SawtoothOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F0D2213F5F800066CEC /* SawtoothOscillator.swift */; };
@@ -248,6 +249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D8C06F0E2213F5F800066CEC /* SawtoothOscillator.swift in Sources */,
+				D846DF1F22195DA3008FFB8B /* HarmonicSeriesOscillator.swift in Sources */,
 				D8E71A44220828D700372CD8 /* ViewController.swift in Sources */,
 				D8C06F0B2213EE8700066CEC /* SineOscillator.swift in Sources */,
 				D83F2468220BF87E00356C0E /* ADSREnvelope.swift in Sources */,

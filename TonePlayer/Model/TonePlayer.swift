@@ -32,10 +32,8 @@ class TonePlayer {
 				let		theSamples = UnsafeMutableBufferPointer<Float32>(theBuffer);
 				let		theToneRef = anInRefCon.assumingMemoryBound(to: TonePlayer.self);
 				let		theTone = theToneRef.pointee;
-				let		theGain = Float32(0.5);
-				assert( theGain > 0.0, "bad gain value: \(theGain)" );
 				if !theSamples.isEmpty {
-					theTone.generate( buffer: theSamples, gain: theGain, count: Int(anInNumberFrames) );
+					theTone.generate( buffer: theSamples, count: Int(anInNumberFrames) );
 				}
 			}
 			return theResult;
@@ -92,8 +90,8 @@ class TonePlayer {
 		return Instrument(tonePlayer: self, oscillator: anOscillator, envelope: anEnvelope);
 	}
 
-	final func generate( buffer aBuffer : UnsafeMutableBufferPointer<Float32>, gain aGain: Float32, count aCount : Int ) {
-		let		theGain = aGain/Float32(maximumPolyphony);
+	final func generate( buffer aBuffer : UnsafeMutableBufferPointer<Float32>, count aCount : Int ) {
+		let		theGain = 1.0/Float32(maximumPolyphony);
 		lock.lock();
 		if voicies.count > 0 {
 			for (theIndex,theVoice) in voicies.enumerated() {

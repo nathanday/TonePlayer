@@ -64,9 +64,9 @@ struct TableOscillator {
 			}
 			let		theXLen = xc>>2;
 			let		thheDelta = aValue/Float(xc);
-			let 	theDeltaV = simd_float4(4.0*thheDelta,4.0*thheDelta,4.0*thheDelta,4.0*thheDelta);
-			x.withMemoryRebound(to: simd_float4.self, capacity: theXLen) { theX in
-				var		p = simd_float4( 0.0, thheDelta, 2.0*thheDelta, 3.0*thheDelta );
+			let 	theDeltaV = float4(4.0*thheDelta,4.0*thheDelta,4.0*thheDelta,4.0*thheDelta);
+			x.withMemoryRebound(to: float4.self, capacity: theXLen) { theX in
+				var		p = float4( 0.0, thheDelta, 2.0*thheDelta, 3.0*thheDelta );
 				theX[0] = p;
 				for t in 1..<theXLen {
 					p = p+theDeltaV;
@@ -77,10 +77,10 @@ struct TableOscillator {
 
 		static private func accumlateScaledFloats(y: UnsafeMutablePointer<Float>, x: UnsafePointer<Float>, yc: Int, a: Float) {
 			assert( yc%4 == 0, "The length of the arrays must be multiples of 4" );
-			let theA = simd_float4(a, a, a, a)
+			let theA = float4(a, a, a, a)
 			let	theYLen = yc>>2;
-			y.withMemoryRebound(to: simd_float4.self, capacity: theYLen) { theY in
-				x.withMemoryRebound(to: simd_float4.self, capacity: theYLen) { theX in
+			y.withMemoryRebound(to: float4.self, capacity: theYLen) { theY in
+				x.withMemoryRebound(to: float4.self, capacity: theYLen) { theX in
 					for t in 0..<theYLen {
 						theY[t] += theA * theX[t]
 					}

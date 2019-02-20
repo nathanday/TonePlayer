@@ -7,6 +7,8 @@
  */
 
 import Foundation
+import Accelerate;
+import simd;
 
 struct HarmonicsDescription {
 	private let		maximumHarmonic = 64;
