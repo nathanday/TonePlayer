@@ -15,7 +15,11 @@ class ViewController: NSViewController {
 
 	var				frequencies : [Double] = [110.0, 165.0, 220.0, 275.0, 330.0, 385.0, 440.0, 495.0, 550.0, 605.0, 660.0, 715.0];
 	var				voices : [TonePlayer.Voice?] = Array<TonePlayer.Voice?>(repeating: nil, count: 12);
-	var				tonePlayer = TonePlayer(maximumPolyphony: 12, sampleRate: 48000.0);
+	var				tonePlayer = TonePlayer(maximumPolyphony: 4, sampleRate: 48000.0);
+
+	@objc var		maximumPolyphony: Int {
+		return tonePlayer.maximumPolyphony;
+	}
 
 	@objc var		envelopeAttack: Double = 0.01 {
 		didSet { currentInstrument = nil; }
@@ -62,7 +66,7 @@ class ViewController: NSViewController {
 		}
 		get {
 			if _currentInstrument == nil {
-				_currentInstrument = tonePlayer.instrument(oscillator: selectedOscillator, envelope: envelope);
+				_currentInstrument = tonePlayer.instrument(oscillator: selectedOscillator, amplitudeEnvelope: envelope);
 			}
 			return _currentInstrument;
 		}
@@ -97,7 +101,7 @@ class ViewController: NSViewController {
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		fillFreqTextFields();
-		currentInstrument = tonePlayer.instrument(oscillator: selectedOscillator, envelope: envelope);
+		currentInstrument = tonePlayer.instrument(oscillator: selectedOscillator, amplitudeEnvelope: envelope);
 	}
 
 	override var representedObject: Any? {

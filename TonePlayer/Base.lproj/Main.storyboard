@@ -1326,7 +1326,7 @@
                                     <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 </textFieldCell>
                             </textField>
-                            <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cAC-uq-6AS">
+                            <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="cAC-uq-6AS">
                                 <rect key="frame" x="24" y="77" width="66" height="17"/>
                                 <textFieldCell key="cell" lineBreakMode="clipping" title="Oscillator:" id="eks-fY-EFy">
                                     <font key="font" metaFont="system"/>
@@ -1336,6 +1336,9 @@
                             </textField>
                             <popUpButton verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="fgl-YO-3mN">
                                 <rect key="frame" x="94" y="72" width="137" height="25"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="132" id="VXo-4j-ZhY"/>
+                                </constraints>
                                 <popUpButtonCell key="cell" type="push" title="Sine wave" bezelStyle="rounded" alignment="left" lineBreakMode="truncatingTail" state="on" borderStyle="borderAndBezel" imageScaling="proportionallyDown" inset="2" selectedItem="q6q-XD-6h4" id="sF7-hK-iz3">
                                     <behavior key="behavior" lightByBackground="YES" lightByGray="YES"/>
                                     <font key="font" metaFont="menu"/>
@@ -1363,31 +1366,31 @@
                                     <binding destination="XfG-lQ-9wD" name="selectedIndex" keyPath="self.selectedOscillatorIndex" id="JII-SM-CKf"/>
                                 </connections>
                             </popUpButton>
-                            <tabView misplaced="YES" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="QKW-Ld-WTx">
-                                <rect key="frame" x="236" y="68" width="541" height="35"/>
+                            <tabView ambiguous="YES" type="noTabsNoBorder" translatesAutoresizingMaskIntoConstraints="NO" id="QKW-Ld-WTx">
+                                <rect key="frame" x="228" y="68" width="471" height="34"/>
                                 <font key="font" metaFont="system"/>
                                 <tabViewItems>
                                     <tabViewItem label="Sine wave" identifier="" id="m2I-2s-x7l">
                                         <view key="view" id="3Mo-qy-hig">
-                                            <rect key="frame" x="0.0" y="0.0" width="541" height="35"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="463" height="35"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Sawtooth wve" identifier="" id="tkz-Wq-KXR">
                                         <view key="view" id="A3d-0x-gpd">
-                                            <rect key="frame" x="0.0" y="0.0" width="541" height="35"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="463" height="35"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Square wave" identifier="" id="1Gd-1Y-Rc1">
                                         <view key="view" id="v76-D7-X9b">
-                                            <rect key="frame" x="0.0" y="0.0" width="541" height="35"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="463" height="35"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Pulse wave" identifier="" id="Ubz-wL-E57">
                                         <view key="view" id="na9-LW-Lzm">
-                                            <rect key="frame" x="0.0" y="0.0" width="541" height="35"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="463" height="35"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ZUC-Zg-kpY">
@@ -1435,11 +1438,11 @@
                                         </view>
                                     </tabViewItem>
                                     <tabViewItem label="Harmonic series" identifier="" id="Fui-8N-vZR">
-                                        <view key="view" id="SA0-fi-rq0">
-                                            <rect key="frame" x="0.0" y="0.0" width="541" height="35"/>
+                                        <view key="view" ambiguous="YES" id="SA0-fi-rq0">
+                                            <rect key="frame" x="0.0" y="0.0" width="471" height="34"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <subviews>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ukf-mf-9Sa">
+                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="ukf-mf-9Sa">
                                                     <rect key="frame" x="6" y="9" width="73" height="17"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="69" id="CAc-FM-NfU"/>
@@ -1450,7 +1453,7 @@
                                                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     </textFieldCell>
                                                 </textField>
-                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dOz-ym-Zj1">
+                                                <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="dOz-ym-Zj1">
                                                     <rect key="frame" x="171" y="9" width="38" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" title="Even:" id="TVT-v1-0Jm">
                                                         <font key="font" usesAppearanceFont="YES"/>
@@ -1537,6 +1540,25 @@
                                     <binding destination="XfG-lQ-9wD" name="selectedIndex" keyPath="self.selectedOscillatorIndex" id="xql-uU-9yB"/>
                                 </connections>
                             </tabView>
+                            <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="Ik8-RT-kFq">
+                                <rect key="frame" x="885" y="77" width="21" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="88" id="aWE-ZF-9bY">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                                <connections>
+                                    <binding destination="XfG-lQ-9wD" name="value" keyPath="self.maximumPolyphony" id="rXr-3C-llR"/>
+                                </connections>
+                            </textField>
+                            <textField horizontalHuggingPriority="750" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="zjN-UX-AOD">
+                                <rect key="frame" x="777" y="77" width="104" height="17"/>
+                                <textFieldCell key="cell" lineBreakMode="clipping" title="Max. Polyphony:" id="9vL-qf-Kam">
+                                    <font key="font" metaFont="system"/>
+                                    <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                    <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                </textFieldCell>
+                            </textField>
                         </subviews>
                         <constraints>
                             <constraint firstItem="fgl-YO-3mN" firstAttribute="firstBaseline" secondItem="cAC-uq-6AS" secondAttribute="firstBaseline" id="1hm-be-hW2"/>
@@ -1545,13 +1567,17 @@
                             <constraint firstItem="dJI-dn-27h" firstAttribute="centerY" secondItem="IZO-0f-MWR" secondAttribute="centerY" id="5P7-DQ-mGp"/>
                             <constraint firstItem="dJI-dn-27h" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" constant="20" id="Ajp-ic-npi"/>
                             <constraint firstItem="zvj-Gi-f5e" firstAttribute="trailing" secondItem="dJI-dn-27h" secondAttribute="trailing" id="EtU-62-lkT"/>
+                            <constraint firstItem="zjN-UX-AOD" firstAttribute="firstBaseline" secondItem="cAC-uq-6AS" secondAttribute="firstBaseline" id="JOu-Kj-xUj"/>
                             <constraint firstAttribute="trailing" secondItem="uVg-bO-04x" secondAttribute="trailing" constant="20" id="Kyb-Sg-cS6"/>
-                            <constraint firstAttribute="trailing" secondItem="QKW-Ld-WTx" secondAttribute="trailing" constant="20" id="LpC-5d-YT2"/>
                             <constraint firstItem="M35-sp-m4e" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="U5g-y4-Acw"/>
                             <constraint firstItem="zvj-Gi-f5e" firstAttribute="centerY" secondItem="uVg-bO-04x" secondAttribute="centerY" id="Vbs-kC-aNK"/>
+                            <constraint firstItem="zjN-UX-AOD" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QKW-Ld-WTx" secondAttribute="trailing" constant="12" id="Xog-4v-TuA"/>
+                            <constraint firstItem="Ik8-RT-kFq" firstAttribute="leading" secondItem="zjN-UX-AOD" secondAttribute="trailing" constant="8" id="YCD-hF-Ote"/>
                             <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="M35-sp-m4e" secondAttribute="trailing" constant="20" id="YCj-zH-ypt"/>
                             <constraint firstItem="IZO-0f-MWR" firstAttribute="leading" secondItem="dJI-dn-27h" secondAttribute="trailing" constant="8" id="ZYY-yB-TYX"/>
+                            <constraint firstItem="Ik8-RT-kFq" firstAttribute="firstBaseline" secondItem="cAC-uq-6AS" secondAttribute="firstBaseline" id="crB-gy-0xF"/>
                             <constraint firstItem="zvj-Gi-f5e" firstAttribute="top" secondItem="dJI-dn-27h" secondAttribute="bottom" constant="8" id="du2-E9-LGb"/>
+                            <constraint firstAttribute="trailing" secondItem="Ik8-RT-kFq" secondAttribute="trailing" constant="20" id="eT2-uY-XVb"/>
                             <constraint firstItem="QKW-Ld-WTx" firstAttribute="leading" secondItem="fgl-YO-3mN" secondAttribute="trailing" id="iTL-mo-rLI"/>
                             <constraint firstItem="dJI-dn-27h" firstAttribute="top" secondItem="cAC-uq-6AS" secondAttribute="bottom" constant="12" id="mdX-4I-AHt"/>
                             <constraint firstAttribute="bottom" secondItem="uVg-bO-04x" secondAttribute="bottom" constant="20" id="pQz-Br-yCh"/>

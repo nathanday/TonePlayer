@@ -12,7 +12,7 @@ import simd;
 class TonePlayer {
 	private var		toneUnit : AudioComponentInstance?;
 	private var		voicies = ContiguousArray<TonePlayer.Voice>();
-	private var		lock = NSLock();
+	private var		lock = NSRecursiveLock();
 
 	let				maximumPolyphony: Int;
 	let				sampleRate: Float64;
@@ -73,21 +73,38 @@ class TonePlayer {
 	}
 
 	deinit {
+		lock.lock()
 		let		theError = AudioOutputUnitStop(toneUnit! );
 		assert( theError == noErr, "Error starting unit: \(theError)");
+		lock.unlock()
 	}
 
 	func play(voice aVoice: Voice) {
 		lock.lock()
 		if voicies.count+1 > maximumPolyphony {
-			voicies.remove(at: 0);
+			voicies[0].stop({
+				self.voicies.append(aVoice)
+				NSLog( "release then play voices count = \(self.voicies.count)" );
+			});
+		} else {
+			voicies.append(aVoice);
+			NSLog( "play voices count = \(voicies.count)" );
 		}
-		voicies.append(aVoice);
 		lock.unlock()
 	}
 
-	func instrument( oscillator anOscillator: Oscillator, envelope anEnvelope: Envelope ) -> Instrument {
-		return Instrument(tonePlayer: self, oscillator: anOscillator, envelope: anEnvelope);
+	private func ended(voice aVoice: Voice) {
+		lock.lock()
+		if let theIndex = voicies.firstIndex(of: aVoice) {
+			NSLog( "removed = \(aVoice)" );
+			voicies.remove(at:theIndex);
+			NSLog( "ended voices count = \(voicies.count)" );
+		}
+		lock.unlock()
+	}
+
+	func instrument( oscillator anOscillator: Oscillator, amplitudeEnvelope anEnvelope: Envelope ) -> Instrument {
+		return Instrument(tonePlayer: self, oscillator: anOscillator, amplitudeEnvelope: anEnvelope);
 	}
 
 	final func generate( buffer aBuffer : UnsafeMutableBufferPointer<Float32>, count aCount : Int ) {
@@ -107,13 +124,13 @@ class TonePlayer {
 
 	class Instrument {
 		weak var	tonePlayer: TonePlayer? = nil;
-		let			envelope: Envelope;
+		let			amplitudeEnvelope: Envelope;
 		var			oscillator: Oscillator;
 
-		fileprivate init( tonePlayer aTonePlayer: TonePlayer, oscillator anOscillator: Oscillator, envelope anEnvelope: Envelope) {
+		fileprivate init( tonePlayer aTonePlayer: TonePlayer, oscillator anOscillator: Oscillator, amplitudeEnvelope anEnvelope: Envelope) {
 			tonePlayer = aTonePlayer;
 			oscillator = anOscillator;
-			envelope = anEnvelope;
+			amplitudeEnvelope = anEnvelope;
 		}
 
 		func play(frequency aFrequency: Double) -> TonePlayer.Voice {
@@ -123,25 +140,31 @@ class TonePlayer {
 		}
 	}
 
-	class Voice: Hashable, Comparable {
+	class Voice: Hashable, Equatable, CustomDebugStringConvertible {
+		static private var			identifierCount: UInt64 = 0;
+		private let					identifier: UInt64;
 		public let					instrument: Instrument;
 		public let					frequency: Double;
 		public private(set) var		amplitude: Float32;
+
+		private var		ended: (() -> Void)?
 
 		private let		oscillatorData: OscillatorData;
 
 		private var		theta : Double = 0;
 		private var		amplitudeDelta: Float32;
-		private var		envelopeIndex = 0;
+		private var		amplitudeEnvelopeIndex = 0;
 		private var		nextEnvelopeBreakTime: Int;
 
 		init(instrument anInstrument: Instrument, frequency aFrequency: Double ) {
+			Voice.identifierCount += 1;
+			identifier = Voice.identifierCount;
 			frequency = aFrequency;
 			instrument = anInstrument;
 			oscillatorData = instrument.oscillator.data(length: Int(instrument.tonePlayer!.sampleRate/frequency) );
-			amplitude = instrument.envelope.initialValue;
-			amplitudeDelta = instrument.envelope[0].delta(from: amplitude, sampleRate: anInstrument.tonePlayer!.sampleRate);
-			nextEnvelopeBreakTime = Int(instrument.envelope[0].duration*anInstrument.tonePlayer!.sampleRate);
+			amplitude = instrument.amplitudeEnvelope.initialValue;
+			amplitudeDelta = instrument.amplitudeEnvelope[0].delta(from: amplitude, sampleRate: anInstrument.tonePlayer!.sampleRate);
+			nextEnvelopeBreakTime = Int(instrument.amplitudeEnvelope[0].duration*anInstrument.tonePlayer!.sampleRate);
 		}
 
 		func generate( add anAdd: Bool, buffer aBuffer : UnsafeMutableBufferPointer<Float32>, gain aGain: Float32, count aCount : Int ) {
@@ -160,28 +183,36 @@ class TonePlayer {
 				}
 				if nextEnvelopeBreakTime > 0 {
 					nextEnvelopeBreakTime -= 1;
-				} else if instrument.envelope[envelopeIndex].hold {
+				} else if instrument.amplitudeEnvelope[amplitudeEnvelopeIndex].hold {
 					amplitudeDelta = 0.0;
 					nextEnvelopeBreakTime = Int.max;
 				} else {
-					nextEvelopePoint();
+					if amplitudeEnvelopeIndex+1 < instrument.amplitudeEnvelope.count  {
+						nextEvelopePoint();
+					} else if amplitudeEnvelopeIndex == instrument.amplitudeEnvelope.count {
+						instrument.tonePlayer?.ended(voice:self);
+						ended?();
+						ended = nil;
+					}
 				}
 			}
 		}
 
 		private func nextEvelopePoint() {
 			let		theSampleRate = instrument.tonePlayer!.sampleRate;
-			if envelopeIndex+1 < instrument.envelope.count  {
-				envelopeIndex += 1;
-				amplitudeDelta = instrument.envelope[envelopeIndex].delta(from: amplitude, sampleRate: theSampleRate);
-				nextEnvelopeBreakTime = Int(instrument.envelope[envelopeIndex].duration*theSampleRate);
+			if amplitudeEnvelopeIndex+1 < instrument.amplitudeEnvelope.count  {
+				amplitudeEnvelopeIndex += 1;
+				amplitudeDelta = instrument.amplitudeEnvelope[amplitudeEnvelopeIndex].delta(from: amplitude, sampleRate: theSampleRate);
+				nextEnvelopeBreakTime = Int(instrument.amplitudeEnvelope[amplitudeEnvelopeIndex].duration*theSampleRate);
 			}
 		}
 
-		func stop() {
-			if envelopeIndex < instrument.envelope.count {
-				envelopeIndex = instrument.envelope.count;
+		func stop( _ anEnded: @escaping () -> Void ) {
+			if amplitudeEnvelopeIndex < instrument.amplitudeEnvelope.count {
+				amplitudeEnvelopeIndex = instrument.amplitudeEnvelope.count;
 				amplitudeDelta = -Float32(instrument.tonePlayer!.sampleRate*1.0/20.0);
+				nextEnvelopeBreakTime = Int(amplitudeDelta*Float32(instrument.tonePlayer!.sampleRate)*amplitude);
+				ended = anEnded;
 			}
 		}
 
@@ -190,15 +221,15 @@ class TonePlayer {
 		}
 
 		func hash(into aHasher: inout Hasher) {
-			aHasher.combine((frequency*1000.0).rounded());
+			aHasher.combine(identifier);
 		}
 
 		public static func ==(aLhs: Voice, aRhs: Voice) -> Bool {
-			return aLhs.frequency.distance(to: aRhs.frequency) < 0.0001;
+			return aLhs.identifier == aRhs.identifier;
 		}
 
-		static func < (lhs: TonePlayer.Voice, rhs: TonePlayer.Voice) -> Bool {
-			return lhs.frequency < rhs.frequency;
+		var debugDescription: String {
+			return "identifier: \(identifier), instrument: \(instrument), frequency: \(frequency)";
 		}
 	}
 

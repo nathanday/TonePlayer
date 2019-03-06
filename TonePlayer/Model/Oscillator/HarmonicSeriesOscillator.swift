@@ -20,12 +20,10 @@ struct HarmonicSeriesOscillator: Oscillator {
 	mutating func data(length aLength: Int) -> OscillatorData {
 		let		theLength = aLength>>2;
 		if let theData = data[theLength] {
-			print("\(theData)");
 			return theData;
 		} else {
 			let		theData = HarmonicSeriesOscillatorData(length:theLength<<2, harmonicsDescription:harmonicsDescription);
 			data[theLength] = theData;
-			print("\(theData)");
 			return theData;
 		}
 	}
@@ -36,27 +34,19 @@ class HarmonicSeriesOscillatorData: OscillatorData, CustomStringConvertible {
 
 	init(length aLength: Int, harmonicsDescription aHarmonicsDescription: HarmonicsDescription ) {
 		var	theSamples = [Float32](repeating: 0.0, count: aLength );
-//		var x = [Float](repeating: 0.0, count: aLength );
-//		var y1 = [Float](repeating: 0.0, count: aLength );
-//		var n = Int32( aLength );
+		var x = [Float](repeating: 0.0, count: aLength );
+		var y1 = [Float](repeating: 0.0, count: aLength );
+		var n = Int32( aLength );
 
 		var		theMax: Float = 0.0;
 
 		aHarmonicsDescription.enumerate(to:aLength/2) { (aHarmonic: Int, anAmplitude: Float32) in
 			assert( aHarmonic <= aLength );
-			for i in 0..<aLength {
-				theSamples[i] += sin(2.0*Float.pi*Float(i*aHarmonic)/Float(aLength-1))*anAmplitude;
-				theMax = max(theMax,abs(theSamples[i]));
-			}
-//			HarmonicSeriesOscillatorData.rampedValues(x: &x, xc: x.count, value:Float(aHarmonic))
-//			vvsinpif( &y1, x, &n );
-//			HarmonicSeriesOscillatorData.accumlateScaledFloats(y: &theSamples, x: y1, yc: theSamples.count, a: anAmplitude);
+			HarmonicSeriesOscillatorData.rampedValues(x: &x, xc: x.count, value:Float(aHarmonic))
+			vvsinpif( &y1, x, &n );
+			theMax = HarmonicSeriesOscillatorData.accumlateScaledFloats(y: &theSamples, x: y1, yc: theSamples.count, a: anAmplitude);
 		}
-		if theMax != 1.0 {
-			for i in 0..<aLength {
-				theSamples[i] /= theMax;
-			}
-		}
+		HarmonicSeriesOscillatorData.scaleFloats(y: &theSamples, yc: theSamples.count, d: theMax);
 
 		sample = theSamples
 	}
@@ -94,15 +84,30 @@ class HarmonicSeriesOscillatorData: OscillatorData, CustomStringConvertible {
 		}
 	}
 
-	static private func accumlateScaledFloats(y: UnsafeMutablePointer<Float>, x: UnsafePointer<Float>, yc: Int, a: Float) {
+	static private func accumlateScaledFloats(y: UnsafeMutablePointer<Float>, x: UnsafePointer<Float>, yc: Int, a: Float) -> Float {
 		assert( yc%4 == 0, "The length of the arrays must be multiples of 4" );
+		var	theMax: Float = 0.0;
 		let theA = float4(a, a, a, a)
 		let	theYLen = yc>>2;
 		y.withMemoryRebound(to: float4.self, capacity: theYLen) { theY in
 			x.withMemoryRebound(to: float4.self, capacity: theYLen) { theX in
 				for t in 0..<theYLen {
-					theY[t] += theA * theX[t]
+					theY[t] += theA * theX[t];
+					theMax = max( theMax, theY[t].max() ?? 0.0 );
+					theMax = max( theMax, -(theY[t].min() ?? 0.0) );
 				}
+			}
+		}
+		return theMax;
+	}
+
+	static private func scaleFloats(y: UnsafeMutablePointer<Float>, yc: Int, d: Float) {
+		assert( yc%4 == 0, "The length of the arrays must be multiples of 4" );
+		let theD = float4(d, d, d, d)
+		let	theYLen = yc>>2;
+		y.withMemoryRebound(to: float4.self, capacity: theYLen) { theY in
+			for t in 0..<theYLen {
+				theY[t] /= theD;
 			}
 		}
 	}
