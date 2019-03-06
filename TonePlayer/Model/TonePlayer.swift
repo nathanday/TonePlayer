@@ -210,8 +210,8 @@ class TonePlayer {
 		func stop( _ anEnded: @escaping () -> Void ) {
 			if amplitudeEnvelopeIndex < instrument.amplitudeEnvelope.count {
 				amplitudeEnvelopeIndex = instrument.amplitudeEnvelope.count;
-				amplitudeDelta = -Float32(instrument.tonePlayer!.sampleRate*1.0/20.0);
-				nextEnvelopeBreakTime = Int(amplitudeDelta*Float32(instrument.tonePlayer!.sampleRate)*amplitude);
+				amplitudeDelta = -Float32(amplitude)/Float32(instrument.tonePlayer!.sampleRate*1.0/20.0);
+				nextEnvelopeBreakTime = Int(instrument.tonePlayer!.sampleRate*1.0/20.0);
 				ended = anEnded;
 			}
 		}

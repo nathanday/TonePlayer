@@ -18,7 +18,13 @@ class ViewController: NSViewController {
 	var				tonePlayer = TonePlayer(maximumPolyphony: 4, sampleRate: 48000.0);
 
 	@objc var		maximumPolyphony: Int {
-		return tonePlayer.maximumPolyphony;
+		get {
+			return tonePlayer.maximumPolyphony;
+		}
+		set(aValue) {
+			_currentInstrument = nil;
+			tonePlayer = TonePlayer(maximumPolyphony: aValue, sampleRate: 48000.0);
+		}
 	}
 
 	@objc var		envelopeAttack: Double = 0.01 {
