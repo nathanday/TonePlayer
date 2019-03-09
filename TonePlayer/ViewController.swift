@@ -102,6 +102,18 @@ class ViewController: NSViewController {
 		}
 	}
 
+	@objc var		mute: Bool = false {
+		didSet {
+			tonePlayer.gain = mute ? 0.0 : masterGain;
+		}
+	}
+
+	@objc var		masterGain: Float32 = 1.0 {
+		didSet {
+			tonePlayer.gain = mute ? 0.0 : masterGain;
+		}
+	}
+
 	@IBOutlet weak var freqTextFieldContainerView: NSView!
 
 	override func viewDidLoad() {

@@ -17,6 +17,9 @@ class TonePlayer {
 	let				maximumPolyphony: Int;
 	let				sampleRate: Float64;
 
+	var				gain: Float32 = 1.0;
+	private var		activateGain: Float32 = 1.0;
+
 	init( maximumPolyphony aMaximumPolyphony: Int, sampleRate aSampleRate: Float64 = 48000.0 ) {
 		maximumPolyphony = aMaximumPolyphony;
 		sampleRate = aSampleRate;
@@ -84,11 +87,9 @@ class TonePlayer {
 		if voicies.count+1 > maximumPolyphony {
 			voicies[0].stop({
 				self.voicies.append(aVoice)
-				NSLog( "release then play voices count = \(self.voicies.count)" );
 			});
 		} else {
 			voicies.append(aVoice);
-			NSLog( "play voices count = \(voicies.count)" );
 		}
 		lock.unlock()
 	}
@@ -96,9 +97,7 @@ class TonePlayer {
 	private func ended(voice aVoice: Voice) {
 		lock.lock()
 		if let theIndex = voicies.firstIndex(of: aVoice) {
-			NSLog( "removed = \(aVoice)" );
 			voicies.remove(at:theIndex);
-			NSLog( "ended voices count = \(voicies.count)" );
 		}
 		lock.unlock()
 	}
@@ -108,7 +107,12 @@ class TonePlayer {
 	}
 
 	final func generate( buffer aBuffer : UnsafeMutableBufferPointer<Float32>, count aCount : Int ) {
-		let		theGain = 1.0/Float32(maximumPolyphony);
+		let		theGain = activateGain/Float32(maximumPolyphony);
+		if activateGain < gain {
+			activateGain += min(gain-activateGain,Float32(aCount)/Float32(sampleRate/80.0));
+		} else if activateGain > gain {
+			activateGain -= min(activateGain-gain,Float32(aCount)/Float32(sampleRate/80.0));
+		}
 		lock.lock();
 		if voicies.count > 0 {
 			for (theIndex,theVoice) in voicies.enumerated() {

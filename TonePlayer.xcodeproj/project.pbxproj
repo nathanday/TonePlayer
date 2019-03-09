@@ -56,7 +56,6 @@
 		D8E71A50220828D800372CD8 /* TonePlayerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = TonePlayerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		D8E71A54220828D800372CD8 /* TonePlayerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonePlayerTests.swift; sourceTree = "<group>"; };
 		D8E71A56220828D800372CD8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		D8E71A602208293F00372CD8 /* TableOscillator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableOscillator.swift; sourceTree = "<group>"; };
 		D8E71A632208296F00372CD8 /* HarmonicsDescription.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HarmonicsDescription.swift; sourceTree = "<group>"; };
 		D8E71A66220829BE00372CD8 /* Oscillator_Test.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Oscillator_Test.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -138,7 +137,6 @@
 			isa = PBXGroup;
 			children = (
 				D8E71A632208296F00372CD8 /* HarmonicsDescription.swift */,
-				D8E71A602208293F00372CD8 /* TableOscillator.swift */,
 				D83F245C220AE51D00356C0E /* TonePlayer.swift */,
 				D8C06F082213E98800066CEC /* Oscillator.swift */,
 				D8C06F0C2213F5C800066CEC /* Oscillator */,
