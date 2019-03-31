@@ -7,6 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D81FC568224C7E1F00467BCA /* Oscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F082213E98800066CEC /* Oscillator.swift */; };
+		D81FC569224C7E2F00467BCA /* HarmonicsDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8E71A632208296F00372CD8 /* HarmonicsDescription.swift */; };
+		D81FC56A224C7E3F00467BCA /* SineOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F0A2213EE8700066CEC /* SineOscillator.swift */; };
+		D81FC56B224C7E3F00467BCA /* SawtoothOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F0D2213F5F800066CEC /* SawtoothOscillator.swift */; };
+		D81FC56C224C7E3F00467BCA /* SquareOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F0F2213F71800066CEC /* SquareOscillator.swift */; };
+		D81FC56D224C7E3F00467BCA /* PulseOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F112213FE5800066CEC /* PulseOscillator.swift */; };
+		D81FC56E224C7E3F00467BCA /* HarmonicSeriesOscillator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D8C06F14221546B700066CEC /* HarmonicSeriesOscillator.swift */; };
+		D81FC56F224C7E4500467BCA /* Envelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F2460220AEA0400356C0E /* Envelope.swift */; };
+		D81FC570224C7E4800467BCA /* ADSREnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F245E220AE59400356C0E /* ADSREnvelope.swift */; };
+		D81FC571224C7E5000467BCA /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F245C220AE51D00356C0E /* TonePlayer.swift */; };
 		D83F2467220BF87700356C0E /* Envelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F2460220AEA0400356C0E /* Envelope.swift */; };
 		D83F2468220BF87E00356C0E /* ADSREnvelope.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F245E220AE59400356C0E /* ADSREnvelope.swift */; };
 		D83F2469220D0D7300356C0E /* TonePlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D83F245C220AE51D00356C0E /* TonePlayer.swift */; };
@@ -265,8 +275,18 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D81FC56C224C7E3F00467BCA /* SquareOscillator.swift in Sources */,
+				D81FC56F224C7E4500467BCA /* Envelope.swift in Sources */,
+				D81FC568224C7E1F00467BCA /* Oscillator.swift in Sources */,
+				D81FC569224C7E2F00467BCA /* HarmonicsDescription.swift in Sources */,
 				D8E71A55220828D800372CD8 /* TonePlayerTests.swift in Sources */,
+				D81FC56E224C7E3F00467BCA /* HarmonicSeriesOscillator.swift in Sources */,
+				D81FC570224C7E4800467BCA /* ADSREnvelope.swift in Sources */,
 				D8E71A67220829BE00372CD8 /* Oscillator_Test.swift in Sources */,
+				D81FC56D224C7E3F00467BCA /* PulseOscillator.swift in Sources */,
+				D81FC56B224C7E3F00467BCA /* SawtoothOscillator.swift in Sources */,
+				D81FC571224C7E5000467BCA /* TonePlayer.swift in Sources */,
+				D81FC56A224C7E3F00467BCA /* SineOscillator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +370,7 @@
 				SDKROOT = macosx;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -404,6 +425,7 @@
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};
@@ -422,7 +444,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.godofcocoa.TonePlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 			};
 			name = Debug;
 		};
@@ -441,7 +462,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.godofcocoa.TonePlayer;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.2;
 			};
 			name = Release;
 		};

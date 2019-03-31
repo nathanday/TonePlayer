@@ -83,6 +83,12 @@ class HarmonicSeriesOscillatorData: OscillatorData, CustomStringConvertible {
 			}
 		}
 	}
+	static func max(_ v: float4) -> Float {
+		return Swift.max(Swift.max(v.x, v.y),Swift.max(v.w, v.z));
+	}
+	static func min(_ v: float4) -> Float {
+		return Swift.min(Swift.min(v.x, v.y),Swift.min(v.w, v.z));
+	}
 
 	static private func accumlateScaledFloats(y: UnsafeMutablePointer<Float>, x: UnsafePointer<Float>, yc: Int, a: Float) -> Float {
 		assert( yc%4 == 0, "The length of the arrays must be multiples of 4" );
@@ -93,8 +99,8 @@ class HarmonicSeriesOscillatorData: OscillatorData, CustomStringConvertible {
 			x.withMemoryRebound(to: float4.self, capacity: theYLen) { theX in
 				for t in 0..<theYLen {
 					theY[t] += theA * theX[t];
-					theMax = max( theMax, theY[t].max() ?? 0.0 );
-					theMax = max( theMax, -(theY[t].min() ?? 0.0) );
+					theMax = Swift.max( theMax, max(theY[t]) );
+					theMax = Swift.max( theMax, -(min(theY[t])));
 				}
 			}
 		}
